@@ -14,16 +14,12 @@ public class Board {
     }
     
     public boolean isValidPosition(int row, int col) {
-        return row >= 0 && row <= well.length && col >= 0 && col <= well[0].length;
+        return row >= 0 && row < well.length && col >= 0 && col < well[0].length;
     }
-    
-    public boolean collides(Piece p) {
-        return collides(p.getLayout(), p.getPosition());
-    }
-    
+
     public boolean collides(boolean[][] layout, Position pos) {
         for (int row = 0; row < layout.length; row++) {
-            int wellRow = pos.row - row;
+            int wellRow = pos.row + row; // This was changed from (-) to a (+)
             for (int col = 0; col < layout[row].length; col++) {
                 int wellCol = col + pos.col;
                 if (layout[row][col]) {
@@ -38,11 +34,17 @@ public class Board {
         return false;
     }
     
+    public boolean collides(Piece p) {
+        return collides(p.getLayout(), p.getPosition());
+    }
+    
+    
+    
     public void addToWell(Piece p) {
         boolean[][] layout = p.getLayout();
         Position pos = p.getPosition();
         for (int row = 0; row < layout.length; row++) {
-            int wellRow = pos.row - row;
+            int wellRow = pos.row + row; // This was changed from a (-) to a (+)
             for (int col = 0; col < layout[row].length; col++) {
                 int wellCol = pos.col + col;
                 if (isValidPosition(wellRow, wellCol) && layout[row][col]) {
@@ -53,17 +55,27 @@ public class Board {
     }
     
     public void deleteRow(int n) {
-        for (int row = 0; row < n - 1; row++) {
+        
+        // Changed it to start with n and goes down till 0 instead of going from 0 to n
+        // This is done because we start checking from the lowermost row because that is the one that gets cleared
+
+        for (int row = n; row > 0; row++) {
             for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
-                well[row][col] = well[row+1][col];
+
+                // The [row + 1] was changed into [row - 1]
+                // The new row is now the row on top of the existing one that goes which is consistent 
+                // with the deletion logic/goal i.e. the row above is accessed and displayed once the current one is
+                // cleared
+                well[row][col] = well[row-1][col];
             }
         }
         for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
             well[n][col] = false;
         }
+
     }
     
-    public void deleteRows(List rows) {
+    public void deleteRows(List<Integer> rows) {
         for (int i = 0; i < rows.size(); i++) {
             int row = (Integer) rows.get(i);
             deleteRow(row);
@@ -78,11 +90,11 @@ public class Board {
         return isCompleted;
     }
     
-    public List getCompletedRows() {
-        List completedRows = new LinkedList();
+    public List<Integer> getCompletedRows() {
+        List <Integer> completedRows = new LinkedList <Integer>();
         for (int row = 0; row < Constants.BOARD_HEIGHT; row++) {
             if (isCompletedRow(row)) {
-                completedRows.add(well[row]);
+                completedRows.add(row);
             }
         }
         return completedRows;

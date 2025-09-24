@@ -14,6 +14,7 @@ import com.gamewerks.blocky.gfx.BlockyPanel;
 public class Blocky {
     private static final int FPS = 10;
     private static final double SPF = 1000000000.0 / FPS;
+
     
     public static void main(String[] args) {
         JFrame frame = new JFrame();

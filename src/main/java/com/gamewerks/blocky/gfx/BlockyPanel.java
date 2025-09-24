@@ -20,7 +20,11 @@ public class BlockyPanel extends JPanel {
     
     public BlockyPanel(BlockyGame game) {
         width = Constants.BOARD_WIDTH * BLOCK_SIZE;
-        height = (Constants.BOARD_HEIGHT - 2) * BLOCK_SIZE;
+
+        // Changed from (Constants.BOARD_HEIGHT - 2) to Constants.BOARD_HEIGHT to make it fit the actual screen/
+        // dimensions of the well. Earlier it was going below the visible area.
+
+        height = (Constants.BOARD_HEIGHT) * BLOCK_SIZE;
         this.game = game;
         setPreferredSize(new Dimension(width, height));
     }
@@ -39,7 +43,11 @@ public class BlockyPanel extends JPanel {
                 for (int col = 0; col < 4; col++) {
                     if (layout[row][col]) {
                         g.fillRect((activePos.col + col) * BLOCK_SIZE,
-                                   (activePos.row - row + 1) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+
+                                    // Changed from (activePos.row - row + 1) to (activePos.row + row)
+                                    // The earlier code was making the blocks go below the actual frame and 
+                                    // the falling visualization and the collision visualization irregular
+                                   (activePos.row + row) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     }
                 }
             }
@@ -49,7 +57,11 @@ public class BlockyPanel extends JPanel {
         for (int row = 0; row < Constants.BOARD_HEIGHT; row++) {
             for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
                 if (well[row][col]) {
-                    g.fillRect(col * BLOCK_SIZE, BLOCK_SIZE * (row + 1), BLOCK_SIZE, BLOCK_SIZE);
+
+                    // Changed (row + 1) to (row)
+                    // The earlier code was making the blocks go below the actual frame and 
+                    // the collision visualization irregular
+                    g.fillRect(col * BLOCK_SIZE, BLOCK_SIZE * (row), BLOCK_SIZE, BLOCK_SIZE);
                 }
             }
         }

@@ -11,12 +11,14 @@ public class Piece {
     private static HashMap ROTATION_DATA = null;
     
     static {
+
         try {
             ROTATION_DATA = Loader.loadAllRotationData();
         } catch (IOException ex) {
             System.out.println("Exception occurred loading rotation data");
             System.exit(-1);
         }
+        
     }
     
     private PieceKind kind;
