@@ -28,34 +28,66 @@ public class BlockyGame {
         trySpawnBlock();
     }
 
-    /**Write documentation */
+    /**This function is used to shuffle the array of the kinds of pieces using the Fischer-Yates algorithm
+     * 
+     * @param The array which holds all the piecekinds of type PieceKind[]
+     * @return returns nothing
+     */
+     
     public void FY_shuffle(PieceKind[] arr){
 
+        // Traversing the array in backward direction (as according to the wiki page for the algorithm)
         for (int i = arr.length - 1; i >= 0; i--){
+
+            // Declaring j as a random integer between 0 and 6
             int j = rand.nextInt(6);
+
+            // Temporary object stores the object at current index (during traversal)
             PieceKind temp = arr[i];
+
+            // The element at that position is then assigned to the element at the index of the randomly generated number 
             arr[i] = arr[j];
+
+            // The element at the randomly generated number index is then assigned to the original value of the element
+            // at index i
             arr[j] = temp;
         }
 
 
     }
 
-    /**Write documentation */
+    /**This function replies upon the FY_shuffle function and generates random blocks using that and the algorithm
+     * provided in the project prompt
+     * 
+     * @Param doesn't take anything as its parameter
+     * @return It returns a piecekind
+     * 
+    */
     public PieceKind randomblockgenerator(){
 
+        // Shuffling the array
         FY_shuffle(arr);
+
+        // Declaring piecekind object
         PieceKind rp;
+
+        // If the index is less than 6, Set the element at the index of the shuffled array as the piecekind to return and 
+        // increment index tracker
 
         if (currindex < 6){
             rp = arr[currindex];
             currindex+=1;
+
+        // Else, assign the last element from the array to the piecekind object to be returned.
+        // Then, shuffle once again and set index back to 0
+
         } else {
             rp = arr[currindex];
             FY_shuffle(arr);
             currindex = 0;
         }
     
+        // Returning the piecekind
         return rp;
     
     }

@@ -5,6 +5,7 @@ _(Gamewerks corporation internal code—do not share!)_
 ## Credits
 
 Primary developers: Prof. Osera
+
 Debuggers : Ayan Arora, Isaac Alexander
 
 Acknowledgments :
@@ -21,6 +22,7 @@ Java version 17
 + Grinnell CS evening tutors (Amelia)
 + Java version 17
 + Visual Studio code IDE
++ Wiki page for Fischer-Yates algorithm as linked through project prompt
 
 ## Changelog
 
