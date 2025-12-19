@@ -76,7 +76,13 @@ In 2nd part of paintComponent function, Changed (row + 1) to (row)
                                         
                                         The collision visualization irregular
 
+## Revision log (changes added after getting feedback)
 
+In the deleteRow function of blocky, professor Osera's feedback pointed to a potential error that comes up when a row is filled up and
+needs to be cleared.
+
+The error was because of the loop going from n to 0 but n's updating condition was an increment (n++) instead of
+a decrement (n--). We were also assigning well[n][col] = false; instead of well[0][col] = false;
 
 ~~~console
 We had git problems so there isn't a log. Discussed with Professor Osera, though - project good for submission
