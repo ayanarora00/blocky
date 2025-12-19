@@ -56,10 +56,14 @@ public class Board {
     
     public void deleteRow(int n) {
         
+        if (n < 0 || n > well.length){
+            return;
+        }
+
         // Changed it to start with n and goes down till 0 instead of going from 0 to n
         // This is done because we start checking from the lowermost row because that is the one that gets cleared
 
-        for (int row = n; row > 0; row++) {
+        for (int row = n; row > 0; row--) {
             for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
 
                 // The [row + 1] was changed into [row - 1]
@@ -70,7 +74,7 @@ public class Board {
             }
         }
         for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
-            well[n][col] = false;
+            well[0][col] = false;
         }
 
     }
